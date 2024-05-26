@@ -27,7 +27,7 @@
     "start": "hammer task start",
     "publish": "hammer task publish",
     "publish:dev": "hammer task publish_dev",
-    "bundle-txiki": "bun ./scripts/bundle.ts"
+    "bundle": "bun ./scripts/bundle.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.13.2",
