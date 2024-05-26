@@ -26,7 +26,8 @@
     "format": "hammer task format",
     "start": "hammer task start",
     "publish": "hammer task publish",
-    "publish:dev": "hammer task publish_dev"
+    "publish:dev": "hammer task publish_dev",
+    "bundle-txiki": "bun ./scripts/bundle.ts"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.13.2",
@@ -35,6 +36,7 @@
     "@types/node": "^20.10.1",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
+    "dts-bundle-generator": "^9.5.1",
     "mocha": "^9.2.2",
     "prettier": "^2.7.1",
     "typescript": "^5.4.5"

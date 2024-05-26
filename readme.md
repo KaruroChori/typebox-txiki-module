@@ -1,3 +1,7 @@
+Txiki module version of typebox. Run bundle-txiki to generate the module in `dist`
+
+---
+
 <div align='center'>
 
 <h1>TypeBox</h1>
@@ -27,25 +31,25 @@ $ npm install @sinclair/typebox --save
 ## Example
 
 ```typescript
-import { Type, type Static } from '@sinclair/typebox'
+import { Type, type Static } from "@sinclair/typebox";
 
-const T = Type.Object({                              // const T = {
-  x: Type.Number(),                                  //   type: 'object',
-  y: Type.Number(),                                  //   required: ['x', 'y', 'z'],
-  z: Type.Number()                                   //   properties: {
-})                                                   //     x: { type: 'number' },
-                                                     //     y: { type: 'number' },
-                                                     //     z: { type: 'number' }
-                                                     //   }
-                                                     // }
+const T = Type.Object({
+  // const T = {
+  x: Type.Number(), //   type: 'object',
+  y: Type.Number(), //   required: ['x', 'y', 'z'],
+  z: Type.Number(), //   properties: {
+}); //     x: { type: 'number' },
+//     y: { type: 'number' },
+//     z: { type: 'number' }
+//   }
+// }
 
-type T = Static<typeof T>                            // type T = {
-                                                     //   x: number,
-                                                     //   y: number,
-                                                     //   z: number
-                                                     // }
+type T = Static<typeof T>; // type T = {
+//   x: number,
+//   y: number,
+//   z: number
+// }
 ```
-
 
 <a name="Overview"></a>
 
@@ -58,6 +62,7 @@ This library is designed to allow Json Schema to compose similar to how types co
 License MIT
 
 ## Contents
+
 - [Install](#install)
 - [Overview](#overview)
 - [Usage](#usage)
@@ -122,7 +127,7 @@ License MIT
 The following shows general usage.
 
 ```typescript
-import { Type, type Static } from '@sinclair/typebox'
+import { Type, type Static } from "@sinclair/typebox";
 
 //--------------------------------------------------------------------------------------------
 //
@@ -131,10 +136,10 @@ import { Type, type Static } from '@sinclair/typebox'
 //--------------------------------------------------------------------------------------------
 
 type T = {
-  id: string,
-  name: string,
-  timestamp: number
-}
+  id: string;
+  name: string;
+  timestamp: number;
+};
 
 //--------------------------------------------------------------------------------------------
 //
@@ -142,25 +147,26 @@ type T = {
 //
 //--------------------------------------------------------------------------------------------
 
-const T = Type.Object({                              // const T = {
-  id: Type.String(),                                 //   type: 'object',
-  name: Type.String(),                               //   properties: {
-  timestamp: Type.Integer()                          //     id: {
-})                                                   //       type: 'string'
-                                                     //     },
-                                                     //     name: {
-                                                     //       type: 'string'
-                                                     //     },
-                                                     //     timestamp: {
-                                                     //       type: 'integer'
-                                                     //     }
-                                                     //   },
-                                                     //   required: [
-                                                     //     'id',
-                                                     //     'name',
-                                                     //     'timestamp'
-                                                     //   ]
-                                                     // }
+const T = Type.Object({
+  // const T = {
+  id: Type.String(), //   type: 'object',
+  name: Type.String(), //   properties: {
+  timestamp: Type.Integer(), //     id: {
+}); //       type: 'string'
+//     },
+//     name: {
+//       type: 'string'
+//     },
+//     timestamp: {
+//       type: 'integer'
+//     }
+//   },
+//   required: [
+//     'id',
+//     'name',
+//     'timestamp'
+//   ]
+// }
 
 //--------------------------------------------------------------------------------------------
 //
@@ -168,11 +174,11 @@ const T = Type.Object({                              // const T = {
 //
 //--------------------------------------------------------------------------------------------
 
-type T = Static<typeof T>                            // type T = {
-                                                     //   id: string,
-                                                     //   name: string,
-                                                     //   timestamp: number
-                                                     // }
+type T = Static<typeof T>; // type T = {
+//   id: string,
+//   name: string,
+//   timestamp: number
+// }
 
 //--------------------------------------------------------------------------------------------
 //
@@ -180,12 +186,13 @@ type T = Static<typeof T>                            // type T = {
 //
 //--------------------------------------------------------------------------------------------
 
-import { Value } from '@sinclair/typebox/value'
+import { Value } from "@sinclair/typebox/value";
 
-function receive(value: T) {                         // ... as a Static Type
+function receive(value: T) {
+  // ... as a Static Type
 
-  if(Value.Check(T, value)) {                        // ... as a Json Schema
-
+  if (Value.Check(T, value)) {
+    // ... as a Json Schema
     // ok...
   }
 }
@@ -651,13 +658,19 @@ TypeBox provides an extended type set that can be used to create schematics for 
 Import the Type namespace to bring in the full TypeBox type system. This is recommended for most users.
 
 ```typescript
-import { Type, type Static } from '@sinclair/typebox'
+import { Type, type Static } from "@sinclair/typebox";
 ```
 
 You can also selectively import types. This enables modern bundlers to tree shake for unused types.
 
 ```typescript
-import { Object, Number, String, Boolean, type Static } from '@sinclair/typebox'
+import {
+  Object,
+  Number,
+  String,
+  Boolean,
+  type Static,
+} from "@sinclair/typebox";
 ```
 
 <a name='types-options'></a>
@@ -668,25 +681,28 @@ You can pass Json Schema options on the last argument of any given type. Option 
 
 ```typescript
 // String must be an email
-const T = Type.String({                              // const T = {
-  format: 'email'                                    //   type: 'string',
-})                                                   //   format: 'email'
-                                                     // }
+const T = Type.String({
+  // const T = {
+  format: "email", //   type: 'string',
+}); //   format: 'email'
+// }
 
 // Number must be a multiple of 2
-const T = Type.Number({                              // const T = {
-  multipleOf: 2                                      //  type: 'number',
-})                                                   //  multipleOf: 2
-                                                     // }
+const T = Type.Number({
+  // const T = {
+  multipleOf: 2, //  type: 'number',
+}); //  multipleOf: 2
+// }
 
 // Array must have at least 5 integer values
-const T = Type.Array(Type.Integer(), {               // const T = {
-  minItems: 5                                        //   type: 'array',
-})                                                   //   minItems: 5,
-                                                     //   items: {
-                                                     //     type: 'integer'
-                                                     //   }
-                                                     // }
+const T = Type.Array(Type.Integer(), {
+  // const T = {
+  minItems: 5, //   type: 'array',
+}); //   minItems: 5,
+//   items: {
+//     type: 'integer'
+//   }
+// }
 ```
 
 <a name='types-properties'></a>
@@ -740,31 +756,33 @@ Object properties can be modified with Readonly and Optional. The following tabl
 Generic types can be created with functions. TypeBox types extend the TSchema interface so you should constrain parameters to this type. The following creates a generic Vector type.
 
 ```typescript
-import { Type, type Static, type TSchema } from '@sinclair/typebox'
+import { Type, type Static, type TSchema } from "@sinclair/typebox";
 
-const Vector = <T extends TSchema>(T: T) => 
-  Type.Object({                                      // type Vector<T> = {
-    x: T,                                            //   x: T,
-    y: T,                                            //   y: T,
-    z: T                                             //   z: T
-  })                                                 // }
+const Vector = <T extends TSchema>(T: T) =>
+  Type.Object({
+    // type Vector<T> = {
+    x: T, //   x: T,
+    y: T, //   y: T,
+    z: T, //   z: T
+  }); // }
 
-const NumberVector = Vector(Type.Number())           // type NumberVector = Vector<number>
+const NumberVector = Vector(Type.Number()); // type NumberVector = Vector<number>
 ```
 
 Generic types are often used to create aliases for complex types. The following creates a Nullable generic type.
 
 ```typescript
-const Nullable = <T extends TSchema>(schema: T) => Type.Union([schema, Type.Null()])
+const Nullable = <T extends TSchema>(schema: T) =>
+  Type.Union([schema, Type.Null()]);
 
-const T = Nullable(Type.String())                    // const T = {
-                                                     //   anyOf: [
-                                                     //     { type: 'string' },
-                                                     //     { type: 'null' }
-                                                     //   ]
-                                                     // }
+const T = Nullable(Type.String()); // const T = {
+//   anyOf: [
+//     { type: 'string' },
+//     { type: 'null' }
+//   ]
+// }
 
-type T = Static<typeof T>                            // type T = string | null
+type T = Static<typeof T>; // type T = string | null
 ```
 
 <a name='types-references'></a>
@@ -774,59 +792,67 @@ type T = Static<typeof T>                            // type T = string | null
 Reference types can be created with Ref. These types infer the same as the target type but only store a named `$ref` to the target type.
 
 ```typescript
-const Vector = Type.Object({                         // const Vector = {
-  x: Type.Number(),                                  //   type: 'object',
-  y: Type.Number(),                                  //   required: ['x', 'y', 'z'],
-}, { $id: 'Vector' })                                //   properties: {
-                                                     //     x: { type: 'number' },
-                                                     //     y: { type: 'number' }
-                                                     //   },
-                                                     //   $id: 'Vector'
-                                                     // }
+const Vector = Type.Object(
+  {
+    // const Vector = {
+    x: Type.Number(), //   type: 'object',
+    y: Type.Number(), //   required: ['x', 'y', 'z'],
+  },
+  { $id: "Vector" }
+); //   properties: {
+//     x: { type: 'number' },
+//     y: { type: 'number' }
+//   },
+//   $id: 'Vector'
+// }
 
-const VectorRef = Type.Ref(Vector)                   // const VectorRef = {
-                                                     //   $ref: 'Vector'
-                                                     // }
+const VectorRef = Type.Ref(Vector); // const VectorRef = {
+//   $ref: 'Vector'
+// }
 
-type VectorRef = Static<typeof VectorRef>            // type VectorRef = {
-                                                     //    x: number,
-                                                     //    y: number
-                                                     // }
+type VectorRef = Static<typeof VectorRef>; // type VectorRef = {
+//    x: number,
+//    y: number
+// }
 ```
+
 Use Deref to dereference a type. This function will replace any interior reference with the target type.
-```typescript
-const Vertex = Type.Object({                         // const Vertex = {
-  position: VectorRef,                               //   type: 'object',
-  texcoord: VectorRef,                               //   required: ['position', 'texcoord'],
-})                                                   //   properties: {
-                                                     //     position: { $ref: 'Vector' },
-                                                     //     texcoord: { $ref: 'Vector' }
-                                                     //   }
-                                                     // }
 
-const VertexDeref = Type.Deref(Vertex, [Vector])     // const VertexDeref = {
-                                                     //   type: 'object',
-                                                     //   required: ['position', 'texcoord'],
-                                                     //   properties: {
-                                                     //     position: {
-                                                     //       type: 'object',
-                                                     //       required: ['x', 'y', 'z'],
-                                                     //       properties: {
-                                                     //         x: { type: 'number' },
-                                                     //         y: { type: 'number' }
-                                                     //       }
-                                                     //     },
-                                                     //     texcoord: {
-                                                     //       type: 'object',
-                                                     //       required: ['x', 'y', 'z'],
-                                                     //       properties: {
-                                                     //         x: { type: 'number' },
-                                                     //         y: { type: 'number' }
-                                                     //       }
-                                                     //     }
-                                                     //   }
-                                                     // }
+```typescript
+const Vertex = Type.Object({
+  // const Vertex = {
+  position: VectorRef, //   type: 'object',
+  texcoord: VectorRef, //   required: ['position', 'texcoord'],
+}); //   properties: {
+//     position: { $ref: 'Vector' },
+//     texcoord: { $ref: 'Vector' }
+//   }
+// }
+
+const VertexDeref = Type.Deref(Vertex, [Vector]); // const VertexDeref = {
+//   type: 'object',
+//   required: ['position', 'texcoord'],
+//   properties: {
+//     position: {
+//       type: 'object',
+//       required: ['x', 'y', 'z'],
+//       properties: {
+//         x: { type: 'number' },
+//         y: { type: 'number' }
+//       }
+//     },
+//     texcoord: {
+//       type: 'object',
+//       required: ['x', 'y', 'z'],
+//       properties: {
+//         x: { type: 'number' },
+//         y: { type: 'number' }
+//       }
+//     }
+//   }
+// }
 ```
+
 Note that Ref types do not store structural information about the type they're referencing. Because of this, these types cannot be used with some mapping types (such as Partial or Pick). For applications that require mapping on Ref, use Deref to normalize the type first.
 
 <a name='types-recursive'></a>
@@ -836,33 +862,38 @@ Note that Ref types do not store structural information about the type they're r
 TypeBox supports recursive data structures with Recursive. This type wraps an interior type and provides it a `this` context that allows the type to reference itself. The following creates a recursive type. Singular recursive inference is also supported.
 
 ```typescript
-const Node = Type.Recursive(This => Type.Object({    // const Node = {
-  id: Type.String(),                                 //   $id: 'Node',
-  nodes: Type.Array(This)                            //   type: 'object',
-}), { $id: 'Node' })                                 //   properties: {
-                                                     //     id: {
-                                                     //       type: 'string'
-                                                     //     },
-                                                     //     nodes: {
-                                                     //       type: 'array',
-                                                     //       items: {
-                                                     //         $ref: 'Node'
-                                                     //       }
-                                                     //     }
-                                                     //   },
-                                                     //   required: [
-                                                     //     'id',
-                                                     //     'nodes'
-                                                     //   ]
-                                                     // }
+const Node = Type.Recursive(
+  (This) =>
+    Type.Object({
+      // const Node = {
+      id: Type.String(), //   $id: 'Node',
+      nodes: Type.Array(This), //   type: 'object',
+    }),
+  { $id: "Node" }
+); //   properties: {
+//     id: {
+//       type: 'string'
+//     },
+//     nodes: {
+//       type: 'array',
+//       items: {
+//         $ref: 'Node'
+//       }
+//     }
+//   },
+//   required: [
+//     'id',
+//     'nodes'
+//   ]
+// }
 
-type Node = Static<typeof Node>                      // type Node = {
-                                                     //   id: string
-                                                     //   nodes: Node[]
-                                                     // }
+type Node = Static<typeof Node>; // type Node = {
+//   id: string
+//   nodes: Node[]
+// }
 
 function test(node: Node) {
-  const id = node.nodes[0].nodes[0].id               // id is string
+  const id = node.nodes[0].nodes[0].id; // id is string
 }
 ```
 
@@ -875,30 +906,30 @@ TypeBox supports template literal types with the TemplateLiteral function. This 
 ```typescript
 // TypeScript
 
-type K = `prop${'A'|'B'|'C'}`                        // type T = 'propA' | 'propB' | 'propC'
+type K = `prop${"A" | "B" | "C"}`; // type T = 'propA' | 'propB' | 'propC'
 
-type R = Record<K, string>                           // type R = {
-                                                     //   propA: string
-                                                     //   propB: string
-                                                     //   propC: string
-                                                     // }
+type R = Record<K, string>; // type R = {
+//   propA: string
+//   propB: string
+//   propC: string
+// }
 
 // TypeBox
 
-const K = Type.TemplateLiteral('prop${A|B|C}')       // const K: TTemplateLiteral<[
-                                                     //   TLiteral<'prop'>,
-                                                     //   TUnion<[
-                                                     //      TLiteral<'A'>,
-                                                     //      TLiteral<'B'>,
-                                                     //      TLiteral<'C'>,
-                                                     //   ]>
-                                                     // ]>
+const K = Type.TemplateLiteral("prop${A|B|C}"); // const K: TTemplateLiteral<[
+//   TLiteral<'prop'>,
+//   TUnion<[
+//      TLiteral<'A'>,
+//      TLiteral<'B'>,
+//      TLiteral<'C'>,
+//   ]>
+// ]>
 
-const R = Type.Record(K, Type.String())              // const R: TObject<{
-                                                     //   propA: TString,
-                                                     //   propB: TString,
-                                                     //   propC: TString,
-                                                     // }>
+const R = Type.Record(K, Type.String()); // const R: TObject<{
+//   propA: TString,
+//   propB: TString,
+//   propC: TString,
+// }>
 ```
 
 <a name='types-indexed'></a>
@@ -908,36 +939,37 @@ const R = Type.Record(K, Type.String())              // const R: TObject<{
 TypeBox supports indexed access types with the Index function. This function enables uniform access to interior property and element types without having to extract them from the underlying schema representation. Index types are supported for Object, Array, Tuple, Union and Intersect types.
 
 ```typescript
-const T = Type.Object({                              // type T = {
-  x: Type.Number(),                                  //   x: number,
-  y: Type.String(),                                  //   y: string,
-  z: Type.Boolean()                                  //   z: boolean
-})                                                   // }
+const T = Type.Object({
+  // type T = {
+  x: Type.Number(), //   x: number,
+  y: Type.String(), //   y: string,
+  z: Type.Boolean(), //   z: boolean
+}); // }
 
-const A = Type.Index(T, ['x'])                       // type A = T['x']
-                                                     //
-                                                     // ... evaluated as
-                                                     //
-                                                     // const A: TNumber
+const A = Type.Index(T, ["x"]); // type A = T['x']
+//
+// ... evaluated as
+//
+// const A: TNumber
 
-const B = Type.Index(T, ['x', 'y'])                  // type B = T['x' | 'y']
-                                                     //
-                                                     // ... evaluated as
-                                                     //
-                                                     // const B: TUnion<[
-                                                     //   TNumber,
-                                                     //   TString,
-                                                     // ]>
+const B = Type.Index(T, ["x", "y"]); // type B = T['x' | 'y']
+//
+// ... evaluated as
+//
+// const B: TUnion<[
+//   TNumber,
+//   TString,
+// ]>
 
-const C = Type.Index(T, Type.KeyOf(T))               // type C = T[keyof T]
-                                                     //
-                                                     // ... evaluated as
-                                                     // 
-                                                     // const C: TUnion<[
-                                                     //   TNumber,
-                                                     //   TString,
-                                                     //   TBoolean
-                                                     // ]>
+const C = Type.Index(T, Type.KeyOf(T)); // type C = T[keyof T]
+//
+// ... evaluated as
+//
+// const C: TUnion<[
+//   TNumber,
+//   TString,
+//   TBoolean
+// ]>
 ```
 
 <a name='types-mapped'></a>
@@ -947,21 +979,23 @@ const C = Type.Index(T, Type.KeyOf(T))               // type C = T[keyof T]
 TypeBox supports mapped types with the Mapped function. This function accepts two arguments, the first is a union type typically derived from KeyOf, the second is a mapping function that receives a mapping key `K` that can be used to index properties of a type. The following implements a mapped type that remaps each property to be `T | null`
 
 ```typescript
-const T = Type.Object({                              // type T = {
-  x: Type.Number(),                                  //   x: number,
-  y: Type.String(),                                  //   y: string,
-  z: Type.Boolean()                                  //   z: boolean
-})                                                   // }
+const T = Type.Object({
+  // type T = {
+  x: Type.Number(), //   x: number,
+  y: Type.String(), //   y: string,
+  z: Type.Boolean(), //   z: boolean
+}); // }
 
-const M = Type.Mapped(Type.KeyOf(T), K => {          // type M = { [K in keyof T]: T[K] | null }
-  return Type.Union([Type.Index(T, K), Type.Null()]) //
-})                                                   // ... evaluated as
-                                                     // 
-                                                     // const M: TObject<{
-                                                     //   x: TUnion<[TNumber, TNull]>,
-                                                     //   y: TUnion<[TString, TNull]>,
-                                                     //   z: TUnion<[TBoolean, TNull]>
-                                                     // }>
+const M = Type.Mapped(Type.KeyOf(T), (K) => {
+  // type M = { [K in keyof T]: T[K] | null }
+  return Type.Union([Type.Index(T, K), Type.Null()]); //
+}); // ... evaluated as
+//
+// const M: TObject<{
+//   x: TUnion<[TNumber, TNull]>,
+//   y: TUnion<[TString, TNull]>,
+//   z: TUnion<[TBoolean, TNull]>
+// }>
 ```
 
 <a name='types-conditional'></a>
@@ -972,32 +1006,37 @@ TypeBox supports runtime conditional types with the Extends function. This funct
 
 ```typescript
 // Extends
-const A = Type.Extends(                              // type A = string extends number ? 1 : 2
-  Type.String(),                                     //   
-  Type.Number(),                                     // ... evaluated as
-  Type.Literal(1),                                   //
-  Type.Literal(2)                                    // const A: TLiteral<2>
-)
+const A = Type.Extends(
+  // type A = string extends number ? 1 : 2
+  Type.String(), //
+  Type.Number(), // ... evaluated as
+  Type.Literal(1), //
+  Type.Literal(2) // const A: TLiteral<2>
+);
 
 // Extract
-const B = Type.Extract(                              // type B = Extract<1 | 2 | 3, 1>
-  Type.Union([                                       //
-    Type.Literal(1),                                 // ... evaluated as
-    Type.Literal(2),                                 //
-    Type.Literal(3)                                  // const B: TLiteral<1>
-  ]), 
+const B = Type.Extract(
+  // type B = Extract<1 | 2 | 3, 1>
+  Type.Union([
+    //
+    Type.Literal(1), // ... evaluated as
+    Type.Literal(2), //
+    Type.Literal(3), // const B: TLiteral<1>
+  ]),
   Type.Literal(1)
-)
+);
 
 // Exclude
-const C = Type.Exclude(                              // type C = Exclude<1 | 2 | 3, 1>
-  Type.Union([                                       // 
-    Type.Literal(1),                                 // ... evaluated as
-    Type.Literal(2),                                 //
-    Type.Literal(3)                                  // const C: TUnion<[
-  ]),                                                //   TLiteral<2>,
-  Type.Literal(1)                                    //   TLiteral<3>,
-)                                                    // ]>
+const C = Type.Exclude(
+  // type C = Exclude<1 | 2 | 3, 1>
+  Type.Union([
+    //
+    Type.Literal(1), // ... evaluated as
+    Type.Literal(2), //
+    Type.Literal(3), // const C: TUnion<[
+  ]), //   TLiteral<2>,
+  Type.Literal(1) //   TLiteral<3>,
+); // ]>
 ```
 
 <a name='types-intrinsic'></a>
@@ -1008,28 +1047,32 @@ TypeBox supports the TypeScript intrinsic string manipulation types Uppercase, L
 
 ```typescript
 // TypeScript
-type A = Capitalize<'hello'>                         // type A = 'Hello'
+type A = Capitalize<"hello">; // type A = 'Hello'
 
-type B = Capitalize<'hello' | 'world'>               // type C = 'Hello' | 'World'
+type B = Capitalize<"hello" | "world">; // type C = 'Hello' | 'World'
 
-type C = Capitalize<`hello${1|2|3}`>                 // type B = 'Hello1' | 'Hello2' | 'Hello3'
+type C = Capitalize<`hello${1 | 2 | 3}`>; // type B = 'Hello1' | 'Hello2' | 'Hello3'
 
 // TypeBox
-const A = Type.Capitalize(Type.Literal('hello'))     // const A: TLiteral<'Hello'>
+const A = Type.Capitalize(Type.Literal("hello")); // const A: TLiteral<'Hello'>
 
-const B = Type.Capitalize(Type.Union([               // const B: TUnion<[
-  Type.Literal('hello'),                             //   TLiteral<'Hello'>,
-  Type.Literal('world')                              //   TLiteral<'World'>
-]))                                                  // ]>
+const B = Type.Capitalize(
+  Type.Union([
+    // const B: TUnion<[
+    Type.Literal("hello"), //   TLiteral<'Hello'>,
+    Type.Literal("world"), //   TLiteral<'World'>
+  ])
+); // ]>
 
-const C = Type.Capitalize(                           // const C: TTemplateLiteral<[
-  Type.TemplateLiteral('hello${1|2|3}')              //   TLiteral<'Hello'>,
-)                                                    //   TUnion<[
-                                                     //     TLiteral<'1'>,
-                                                     //     TLiteral<'2'>,
-                                                     //     TLiteral<'3'>
-                                                     //   ]>
-                                                     // ]>
+const C = Type.Capitalize(
+  // const C: TTemplateLiteral<[
+  Type.TemplateLiteral("hello${1|2|3}") //   TLiteral<'Hello'>,
+); //   TUnion<[
+//     TLiteral<'1'>,
+//     TLiteral<'2'>,
+//     TLiteral<'3'>
+//   ]>
+// ]>
 ```
 
 <a name='types-transform'></a>
@@ -1039,26 +1082,28 @@ const C = Type.Capitalize(                           // const C: TTemplateLitera
 TypeBox supports value decoding and encoding with Transform types. These types work in tandem with the Encode and Decode functions available on the Value and TypeCompiler submodules. Transform types can be used to convert Json encoded values into constructs more natural to JavaScript. The following creates a Transform type to decode numbers into Dates using the Value submodule.
 
 ```typescript
-import { Value } from '@sinclair/typebox/value'
+import { Value } from "@sinclair/typebox/value";
 
 const T = Type.Transform(Type.Number())
-  .Decode(value => new Date(value))                  // decode: number to Date
-  .Encode(value => value.getTime())                  // encode: Date to number
+  .Decode((value) => new Date(value)) // decode: number to Date
+  .Encode((value) => value.getTime()); // encode: Date to number
 
-const D = Value.Decode(T, 0)                         // const D = Date(1970-01-01T00:00:00.000Z)
-const E = Value.Encode(T, D)                         // const E = 0
+const D = Value.Decode(T, 0); // const D = Date(1970-01-01T00:00:00.000Z)
+const E = Value.Encode(T, D); // const E = 0
 ```
+
 Use the StaticEncode or StaticDecode types to infer a Transform type.
+
 ```typescript
-import { Static, StaticDecode, StaticEncode } from '@sinclair/typebox'
+import { Static, StaticDecode, StaticEncode } from "@sinclair/typebox";
 
-const T = Type.Transform(Type.Array(Type.Number(), { uniqueItems: true }))         
-  .Decode(value => new Set(value))
-  .Encode(value => [...value])
+const T = Type.Transform(Type.Array(Type.Number(), { uniqueItems: true }))
+  .Decode((value) => new Set(value))
+  .Encode((value) => [...value]);
 
-type D = StaticDecode<typeof T>                      // type D = Set<number>      
-type E = StaticEncode<typeof T>                      // type E = Array<number>
-type T = Static<typeof T>                            // type T = Array<number>
+type D = StaticDecode<typeof T>; // type D = Set<number>
+type E = StaticEncode<typeof T>; // type E = Array<number>
+type T = Static<typeof T>; // type T = Array<number>
 ```
 
 <a name='types-rest'></a>
@@ -1068,17 +1113,18 @@ type T = Static<typeof T>                            // type T = Array<number>
 TypeBox provides the Rest type to uniformly extract variadic tuples from Intersect, Union and Tuple types. This type can be useful to remap variadic types into different forms. The following uses Rest to remap a Tuple into a Union.
 
 ```typescript
-const T = Type.Tuple([                               // const T: TTuple<[
-  Type.String(),                                     //   TString,
-  Type.Number()                                      //   TNumber
-])                                                   // ]>
+const T = Type.Tuple([
+  // const T: TTuple<[
+  Type.String(), //   TString,
+  Type.Number(), //   TNumber
+]); // ]>
 
-const R = Type.Rest(T)                               // const R: [TString, TNumber]
+const R = Type.Rest(T); // const R: [TString, TNumber]
 
-const U = Type.Union(R)                              // const T: TUnion<[
-                                                     //   TString,
-                                                     //   TNumber
-                                                     // ]>
+const U = Type.Union(R); // const T: TUnion<[
+//   TString,
+//   TNumber
+// ]>
 ```
 
 <a name='types-unsafe'></a>
@@ -1088,33 +1134,39 @@ const U = Type.Union(R)                              // const T: TUnion<[
 TypeBox supports user defined types with Unsafe. This type allows you to specify both schema representation and inference type. The following creates an Unsafe type with a number schema that infers as string.
 
 ```typescript
-const T = Type.Unsafe<string>({ type: 'number' })    // const T = { type: 'number' }
+const T = Type.Unsafe<string>({ type: "number" }); // const T = { type: 'number' }
 
-type T = Static<typeof T>                            // type T = string - ?
+type T = Static<typeof T>; // type T = string - ?
 ```
+
 The Unsafe type is often used to create schematics for extended specifications like OpenAPI.
+
 ```typescript
+const Nullable = <T extends TSchema>(schema: T) =>
+  Type.Unsafe<Static<T> | null>({
+    ...schema,
+    nullable: true,
+  });
 
-const Nullable = <T extends TSchema>(schema: T) => Type.Unsafe<Static<T> | null>({ 
-  ...schema, nullable: true 
-})
+const T = Nullable(Type.String()); // const T = {
+//   type: 'string',
+//   nullable: true
+// }
 
-const T = Nullable(Type.String())                    // const T = {
-                                                     //   type: 'string',
-                                                     //   nullable: true
-                                                     // }
+type T = Static<typeof T>; // type T = string | null
 
-type T = Static<typeof T>                            // type T = string | null
+const StringEnum = <T extends string[]>(values: [...T]) =>
+  Type.Unsafe<T[number]>({
+    type: "string",
+    enum: values,
+  });
+const S = StringEnum(["A", "B", "C"]); // const S = {
+//   enum: ['A', 'B', 'C']
+// }
 
-const StringEnum = <T extends string[]>(values: [...T]) => Type.Unsafe<T[number]>({ 
-  type: 'string', enum: values 
-})
-const S = StringEnum(['A', 'B', 'C'])                // const S = {
-                                                     //   enum: ['A', 'B', 'C']
-                                                     // }
-
-type S = Static<typeof T>                            // type S = 'A' | 'B' | 'C'
+type S = Static<typeof T>; // type S = 'A' | 'B' | 'C'
 ```
+
 <a name='types-guard'></a>
 
 ### TypeGuard
@@ -1122,12 +1174,11 @@ type S = Static<typeof T>                            // type S = 'A' | 'B' | 'C'
 TypeBox can check its own types with the TypeGuard module. This module is written for type introspection and provides structural tests for every built-in TypeBox type. Functions of this module return `is` guards which can be used with control flow assertions to obtain schema inference for unknown values. The following guards that the value `T` is TString.
 
 ```typescript
-import { TypeGuard, Kind } from '@sinclair/typebox'
+import { TypeGuard, Kind } from "@sinclair/typebox";
 
-const T = { [Kind]: 'String', type: 'string' }
+const T = { [Kind]: "String", type: "string" };
 
-if(TypeGuard.IsString(T)) {
-
+if (TypeGuard.IsString(T)) {
   // T is TString
 }
 ```
@@ -1139,26 +1190,27 @@ if(TypeGuard.IsString(T)) {
 TypeBox types contain various symbol properties that are used for reflection, composition and compilation. These properties are not strictly valid Json Schema; so in some cases it may be desirable to omit them. TypeBox provides a `Strict` function that will omit these properties if necessary.
 
 ```typescript
-const T = Type.Object({                              // const T = {
-  name: Type.Optional(Type.String())                 //   [Symbol(TypeBox.Kind)]: 'Object',
-})                                                   //   type: 'object',
-                                                     //   properties: {
-                                                     //     name: {
-                                                     //       type: 'string',
-                                                     //       [Symbol(TypeBox.Kind)]: 'String',
-                                                     //       [Symbol(TypeBox.Optional)]: 'Optional'
-                                                     //     }
-                                                     //   }
-                                                     // }
+const T = Type.Object({
+  // const T = {
+  name: Type.Optional(Type.String()), //   [Symbol(TypeBox.Kind)]: 'Object',
+}); //   type: 'object',
+//   properties: {
+//     name: {
+//       type: 'string',
+//       [Symbol(TypeBox.Kind)]: 'String',
+//       [Symbol(TypeBox.Optional)]: 'Optional'
+//     }
+//   }
+// }
 
-const U = Type.Strict(T)                             // const U = {
-                                                     //   type: 'object',
-                                                     //   properties: {
-                                                     //     name: {
-                                                     //       type: 'string'
-                                                     //     }
-                                                     //   }
-                                                     // }
+const U = Type.Strict(T); // const U = {
+//   type: 'object',
+//   properties: {
+//     name: {
+//       type: 'string'
+//     }
+//   }
+// }
 ```
 
 <a name='values'></a>
@@ -1168,7 +1220,7 @@ const U = Type.Strict(T)                             // const U = {
 TypeBox provides an optional Value submodule that can be used to perform structural operations on JavaScript values. This submodule includes functionality to create, check and cast values from types as well as check equality, clone, diff and patch JavaScript values. This submodule is provided via optional import.
 
 ```typescript
-import { Value } from '@sinclair/typebox/value'
+import { Value } from "@sinclair/typebox/value";
 ```
 
 <a name='values-create'></a>
@@ -1178,9 +1230,9 @@ import { Value } from '@sinclair/typebox/value'
 Use the Create function to create a value from a type. TypeBox will use default values if specified.
 
 ```typescript
-const T = Type.Object({ x: Type.Number(), y: Type.Number({ default: 42 }) })
+const T = Type.Object({ x: Type.Number(), y: Type.Number({ default: 42 }) });
 
-const A = Value.Create(T)                            // const A = { x: 0, y: 42 }
+const A = Value.Create(T); // const A = { x: 0, y: 42 }
 ```
 
 <a name='values-clone'></a>
@@ -1190,7 +1242,7 @@ const A = Value.Create(T)                            // const A = { x: 0, y: 42 
 Use the Clone function to deeply clone a value.
 
 ```typescript
-const A = Value.Clone({ x: 1, y: 2, z: 3 })          // const A = { x: 1, y: 2, z: 3 }
+const A = Value.Clone({ x: 1, y: 2, z: 3 }); // const A = { x: 1, y: 2, z: 3 }
 ```
 
 <a name='values-check'></a>
@@ -1200,9 +1252,9 @@ const A = Value.Clone({ x: 1, y: 2, z: 3 })          // const A = { x: 1, y: 2, 
 Use the Check function to type check a value.
 
 ```typescript
-const T = Type.Object({ x: Type.Number() })
+const T = Type.Object({ x: Type.Number() });
 
-const R = Value.Check(T, { x: 1 })                   // const R = true
+const R = Value.Check(T, { x: 1 }); // const R = true
 ```
 
 <a name='values-convert'></a>
@@ -1212,11 +1264,11 @@ const R = Value.Check(T, { x: 1 })                   // const R = true
 Use the Convert function to convert a value into its target type if a reasonable conversion is possible. This function may return an invalid value and should be checked before use. Its return type is `unknown`.
 
 ```typescript
-const T = Type.Object({ x: Type.Number() })
+const T = Type.Object({ x: Type.Number() });
 
-const R1 = Value.Convert(T, { x: '3.14' })           // const R1 = { x: 3.14 }
+const R1 = Value.Convert(T, { x: "3.14" }); // const R1 = { x: 3.14 }
 
-const R2 = Value.Convert(T, { x: 'not a number' })   // const R2 = { x: 'not a number' }
+const R2 = Value.Convert(T, { x: "not a number" }); // const R2 = { x: 'not a number' }
 ```
 
 <a name='values-clean'></a>
@@ -1226,16 +1278,16 @@ const R2 = Value.Convert(T, { x: 'not a number' })   // const R2 = { x: 'not a n
 Use Clean to remove excess properties from a value. This function does not check the value and returns an unknown type. You should Check the result before use. Clean is a mutable operation. To avoid mutation, Clone the value first.
 
 ```typescript
-const T = Type.Object({ 
-  x: Type.Number(), 
-  y: Type.Number() 
-})
+const T = Type.Object({
+  x: Type.Number(),
+  y: Type.Number(),
+});
 
-const X = Value.Clean(T, null)                        // const 'X = null
+const X = Value.Clean(T, null); // const 'X = null
 
-const Y = Value.Clean(T, { x: 1 })                    // const 'Y = { x: 1 }
+const Y = Value.Clean(T, { x: 1 }); // const 'Y = { x: 1 }
 
-const Z = Value.Clean(T, { x: 1, y: 2, z: 3 })        // const 'Z = { x: 1, y: 2 }
+const Z = Value.Clean(T, { x: 1, y: 2, z: 3 }); // const 'Z = { x: 1, y: 2 }
 ```
 
 <a name='values-default'></a>
@@ -1245,16 +1297,16 @@ const Z = Value.Clean(T, { x: 1, y: 2, z: 3 })        // const 'Z = { x: 1, y: 2
 Use Default to generate missing properties on a value using default schema annotations if available. This function does not check the value and returns an unknown type. You should Check the result before use. Default is a mutable operation. To avoid mutation, Clone the value first.
 
 ```typescript
-const T = Type.Object({ 
-  x: Type.Number({ default: 0 }), 
-  y: Type.Number({ default: 0 })
-})
+const T = Type.Object({
+  x: Type.Number({ default: 0 }),
+  y: Type.Number({ default: 0 }),
+});
 
-const X = Value.Default(T, null)                        // const 'X = null - non-enumerable
+const X = Value.Default(T, null); // const 'X = null - non-enumerable
 
-const Y = Value.Default(T, { })                         // const 'Y = { x: 0, y: 0 }
+const Y = Value.Default(T, {}); // const 'Y = { x: 0, y: 0 }
 
-const Z = Value.Default(T, { x: 1 })                    // const 'Z = { x: 1, y: 0 }
+const Z = Value.Default(T, { x: 1 }); // const 'Z = { x: 1, y: 0 }
 ```
 
 <a name='values-cast'></a>
@@ -1264,13 +1316,16 @@ const Z = Value.Default(T, { x: 1 })                    // const 'Z = { x: 1, y:
 Use the Cast function to upcast a value into a target type. This function will retain as much infomation as possible from the original value. The Cast function is intended to be used in data migration scenarios where existing values need to be upgraded to match a modified type.
 
 ```typescript
-const T = Type.Object({ x: Type.Number(), y: Type.Number() }, { additionalProperties: false })
+const T = Type.Object(
+  { x: Type.Number(), y: Type.Number() },
+  { additionalProperties: false }
+);
 
-const X = Value.Cast(T, null)                        // const X = { x: 0, y: 0 }
+const X = Value.Cast(T, null); // const X = { x: 0, y: 0 }
 
-const Y = Value.Cast(T, { x: 1 })                    // const Y = { x: 1, y: 0 }
+const Y = Value.Cast(T, { x: 1 }); // const Y = { x: 1, y: 0 }
 
-const Z = Value.Cast(T, { x: 1, y: 2, z: 3 })        // const Z = { x: 1, y: 2 }
+const Z = Value.Cast(T, { x: 1, y: 2, z: 3 }); // const Z = { x: 1, y: 2 }
 ```
 
 <a name='values-decode'></a>
@@ -1280,10 +1335,11 @@ const Z = Value.Cast(T, { x: 1, y: 2, z: 3 })        // const Z = { x: 1, y: 2 }
 Use the Decode function to decode a value from a type or throw if the value is invalid. The return value will infer as the decoded type. This function will run Transform codecs if available.
 
 ```typescript
-const A = Value.Decode(Type.String(), 'hello')        // const A = 'hello'
+const A = Value.Decode(Type.String(), "hello"); // const A = 'hello'
 
-const B = Value.Decode(Type.String(), 42)             // throw
+const B = Value.Decode(Type.String(), 42); // throw
 ```
+
 <a name='values-decode'></a>
 
 ### Encode
@@ -1291,9 +1347,9 @@ const B = Value.Decode(Type.String(), 42)             // throw
 Use the Encode function to encode a value to a type or throw if the value is invalid. The return value will infer as the encoded type. This function will run Transform codecs if available.
 
 ```typescript
-const A = Value.Encode(Type.String(), 'hello')        // const A = 'hello'
+const A = Value.Encode(Type.String(), "hello"); // const A = 'hello'
 
-const B = Value.Encode(Type.String(), 42)             // throw
+const B = Value.Encode(Type.String(), 42); // throw
 ```
 
 <a name='values-equal'></a>
@@ -1303,10 +1359,11 @@ const B = Value.Encode(Type.String(), 42)             // throw
 Use the Equal function to deeply check for value equality.
 
 ```typescript
-const R = Value.Equal(                               // const R = true
+const R = Value.Equal(
+  // const R = true
   { x: 1, y: 2, z: 3 },
   { x: 1, y: 2, z: 3 }
-)
+);
 ```
 
 <a name='values-hash'></a>
@@ -1316,9 +1373,9 @@ const R = Value.Equal(                               // const R = true
 Use the Hash function to create a [FNV1A-64](https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function) non cryptographic hash of a value.
 
 ```typescript
-const A = Value.Hash({ x: 1, y: 2, z: 3 })           // const A = 2910466848807138541n
+const A = Value.Hash({ x: 1, y: 2, z: 3 }); // const A = 2910466848807138541n
 
-const B = Value.Hash({ x: 1, y: 4, z: 3 })           // const B = 1418369778807423581n
+const B = Value.Hash({ x: 1, y: 4, z: 3 }); // const B = 1418369778807423581n
 ```
 
 <a name='values-diff'></a>
@@ -1328,12 +1385,13 @@ const B = Value.Hash({ x: 1, y: 4, z: 3 })           // const B = 14183697788074
 Use the Diff function to generate a sequence of edits that will transform one value into another.
 
 ```typescript
-const E = Value.Diff(                                // const E = [
-  { x: 1, y: 2, z: 3 },                              //   { type: 'update', path: '/y', value: 4 },
-  { y: 4, z: 5, w: 6 }                               //   { type: 'update', path: '/z', value: 5 },
-)                                                    //   { type: 'insert', path: '/w', value: 6 },
-                                                     //   { type: 'delete', path: '/x' }
-                                                     // ]
+const E = Value.Diff(
+  // const E = [
+  { x: 1, y: 2, z: 3 }, //   { type: 'update', path: '/y', value: 4 },
+  { y: 4, z: 5, w: 6 } //   { type: 'update', path: '/z', value: 5 },
+); //   { type: 'insert', path: '/w', value: 6 },
+//   { type: 'delete', path: '/x' }
+// ]
 ```
 
 <a name='values-patch'></a>
@@ -1343,16 +1401,16 @@ const E = Value.Diff(                                // const E = [
 Use the Patch function to apply a sequence of edits.
 
 ```typescript
-const A = { x: 1, y: 2 }
+const A = { x: 1, y: 2 };
 
-const B = { x: 3 }
+const B = { x: 3 };
 
-const E = Value.Diff(A, B)                           // const E = [
-                                                     //   { type: 'update', path: '/x', value: 3 },
-                                                     //   { type: 'delete', path: '/y' }
-                                                     // ]
+const E = Value.Diff(A, B); // const E = [
+//   { type: 'update', path: '/x', value: 3 },
+//   { type: 'delete', path: '/y' }
+// ]
 
-const C = Value.Patch<typeof B>(A, E)                // const C = { x: 3 }
+const C = Value.Patch<typeof B>(A, E); // const C = { x: 3 }
 ```
 
 <a name='values-errors'></a>
@@ -1362,19 +1420,19 @@ const C = Value.Patch<typeof B>(A, E)                // const C = { x: 3 }
 Use the Errors function to enumerate validation errors.
 
 ```typescript
-const T = Type.Object({ x: Type.Number(), y: Type.Number() })
+const T = Type.Object({ x: Type.Number(), y: Type.Number() });
 
-const R = [...Value.Errors(T, { x: '42' })]          // const R = [{
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/x',
-                                                     //   value: '42',
-                                                     //   message: 'Expected number'
-                                                     // }, {
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/y',
-                                                     //   value: undefined,
-                                                     //   message: 'Expected number'
-                                                     // }]
+const R = [...Value.Errors(T, { x: "42" })]; // const R = [{
+//   schema: { type: 'number' },
+//   path: '/x',
+//   value: '42',
+//   message: 'Expected number'
+// }, {
+//   schema: { type: 'number' },
+//   path: '/y',
+//   value: undefined,
+//   message: 'Expected number'
+// }]
 ```
 
 <a name='values-mutate'></a>
@@ -1384,15 +1442,15 @@ const R = [...Value.Errors(T, { x: '42' })]          // const R = [{
 Use the Mutate function to perform a deep mutable value assignment while retaining internal references.
 
 ```typescript
-const Y = { z: 1 }                                   // const Y = { z: 1 }
-const X = { y: Y }                                   // const X = { y: { z: 1 } }
-const A = { x: X }                                   // const A = { x: { y: { z: 1 } } }
+const Y = { z: 1 }; // const Y = { z: 1 }
+const X = { y: Y }; // const X = { y: { z: 1 } }
+const A = { x: X }; // const A = { x: { y: { z: 1 } } }
 
-Value.Mutate(A, { x: { y: { z: 2 } } })              // A' = { x: { y: { z: 2 } } }
+Value.Mutate(A, { x: { y: { z: 2 } } }); // A' = { x: { y: { z: 2 } } }
 
-const R0 = A.x.y.z === 2                             // const R0 = true
-const R1 = A.x.y === Y                               // const R1 = true
-const R2 = A.x === X                                 // const R2 = true
+const R0 = A.x.y.z === 2; // const R0 = true
+const R1 = A.x.y === Y; // const R1 = true
+const R2 = A.x === X; // const R2 = true
 ```
 
 <a name='values-pointer'></a>
@@ -1402,13 +1460,13 @@ const R2 = A.x === X                                 // const R2 = true
 Use ValuePointer to perform mutable updates on existing values using [RFC6901](https://www.rfc-editor.org/rfc/rfc6901) Json Pointers.
 
 ```typescript
-import { ValuePointer } from '@sinclair/typebox/value'
+import { ValuePointer } from "@sinclair/typebox/value";
 
-const A = { x: 0, y: 0, z: 0 }
+const A = { x: 0, y: 0, z: 0 };
 
-ValuePointer.Set(A, '/x', 1)                         // A' = { x: 1, y: 0, z: 0 }
-ValuePointer.Set(A, '/y', 1)                         // A' = { x: 1, y: 1, z: 0 }
-ValuePointer.Set(A, '/z', 1)                         // A' = { x: 1, y: 1, z: 1 }
+ValuePointer.Set(A, "/x", 1); // A' = { x: 1, y: 0, z: 0 }
+ValuePointer.Set(A, "/y", 1); // A' = { x: 1, y: 1, z: 0 }
+ValuePointer.Set(A, "/z", 1); // A' = { x: 1, y: 1, z: 1 }
 ```
 
 <a name='typeregistry'></a>
@@ -1424,15 +1482,15 @@ The TypeBox type system can be extended with additional types and formats using 
 Use the TypeRegistry to register a type. The Kind must match the registered type name.
 
 ```typescript
-import { TSchema, Kind, TypeRegistry } from '@sinclair/typebox'
+import { TSchema, Kind, TypeRegistry } from "@sinclair/typebox";
 
-TypeRegistry.Set('Foo', (schema, value) => value === 'foo')
+TypeRegistry.Set("Foo", (schema, value) => value === "foo");
 
-const Foo = { [Kind]: 'Foo' } as TSchema 
+const Foo = { [Kind]: "Foo" } as TSchema;
 
-const A = Value.Check(Foo, 'foo')                    // const A = true
+const A = Value.Check(Foo, "foo"); // const A = true
 
-const B = Value.Check(Foo, 'bar')                    // const B = false
+const B = Value.Check(Foo, "bar"); // const B = false
 ```
 
 <a name='typeregistry-format'></a>
@@ -1442,15 +1500,15 @@ const B = Value.Check(Foo, 'bar')                    // const B = false
 Use the FormatRegistry to register a string format.
 
 ```typescript
-import { FormatRegistry } from '@sinclair/typebox'
+import { FormatRegistry } from "@sinclair/typebox";
 
-FormatRegistry.Set('foo', (value) => value === 'foo')
+FormatRegistry.Set("foo", (value) => value === "foo");
 
-const T = Type.String({ format: 'foo' })
+const T = Type.String({ format: "foo" });
 
-const A = Value.Check(T, 'foo')                      // const A = true
+const A = Value.Check(T, "foo"); // const A = true
 
-const B = Value.Check(T, 'bar')                      // const B = false
+const B = Value.Check(T, "bar"); // const B = false
 ```
 
 <a name='typecheck'></a>
@@ -1472,34 +1530,36 @@ $ npm install ajv ajv-formats --save
 ```
 
 ```typescript
-import { Type }   from '@sinclair/typebox'
-import addFormats from 'ajv-formats'
-import Ajv        from 'ajv'
+import { Type } from "@sinclair/typebox";
+import addFormats from "ajv-formats";
+import Ajv from "ajv";
 
 const ajv = addFormats(new Ajv({}), [
-  'date-time',
-  'time',
-  'date',
-  'email',
-  'hostname',
-  'ipv4',
-  'ipv6',
-  'uri',
-  'uri-reference',
-  'uuid',
-  'uri-template',
-  'json-pointer',
-  'relative-json-pointer',
-  'regex'
-])
+  "date-time",
+  "time",
+  "date",
+  "email",
+  "hostname",
+  "ipv4",
+  "ipv6",
+  "uri",
+  "uri-reference",
+  "uuid",
+  "uri-template",
+  "json-pointer",
+  "relative-json-pointer",
+  "regex",
+]);
 
-const validate = ajv.compile(Type.Object({
-  x: Type.Number(),
-  y: Type.Number(),
-  z: Type.Number()
-}))
+const validate = ajv.compile(
+  Type.Object({
+    x: Type.Number(),
+    y: Type.Number(),
+    z: Type.Number(),
+  })
+);
 
-const R = validate({ x: 1, y: 2, z: 3 })             // const R = true
+const R = validate({ x: 1, y: 2, z: 3 }); // const R = true
 ```
 
 <a name='typecheck-typecompiler'></a>
@@ -1511,65 +1571,71 @@ The TypeBox TypeCompiler is a high performance JIT validation compiler that tran
 The TypeCompiler is provided as an optional import.
 
 ```typescript
-import { TypeCompiler } from '@sinclair/typebox/compiler'
+import { TypeCompiler } from "@sinclair/typebox/compiler";
 ```
 
 Use the Compile function to JIT compile a type. Note that compilation is generally an expensive operation and should only be performed once per type during application start up. TypeBox does not cache previously compiled types, and applications are expected to hold references to each compiled type for the lifetime of the application.
 
 ```typescript
-const C = TypeCompiler.Compile(Type.Object({         // const C: TypeCheck<TObject<{
-  x: Type.Number(),                                  //     x: TNumber;
-  y: Type.Number(),                                  //     y: TNumber;
-  z: Type.Number()                                   //     z: TNumber;
-}))                                                  // }>>
+const C = TypeCompiler.Compile(
+  Type.Object({
+    // const C: TypeCheck<TObject<{
+    x: Type.Number(), //     x: TNumber;
+    y: Type.Number(), //     y: TNumber;
+    z: Type.Number(), //     z: TNumber;
+  })
+); // }>>
 
-const R = C.Check({ x: 1, y: 2, z: 3 })              // const R = true
+const R = C.Check({ x: 1, y: 2, z: 3 }); // const R = true
 ```
 
 Use the Errors function to generate diagnostic errors for a value. The Errors function will return an iterator that when enumerated; will perform an exhaustive check across the entire value yielding any error found. For performance, this function should only be called after a failed Check. Applications may also choose to yield only the first value to avoid exhaustive error generation.
 
 ```typescript
-const C = TypeCompiler.Compile(Type.Object({         // const C: TypeCheck<TObject<{
-  x: Type.Number(),                                  //     x: TNumber;
-  y: Type.Number(),                                  //     y: TNumber;
-  z: Type.Number()                                   //     z: TNumber;
-}))                                                  // }>>
+const C = TypeCompiler.Compile(
+  Type.Object({
+    // const C: TypeCheck<TObject<{
+    x: Type.Number(), //     x: TNumber;
+    y: Type.Number(), //     y: TNumber;
+    z: Type.Number(), //     z: TNumber;
+  })
+); // }>>
 
-const value = { }
+const value = {};
 
-const first = C.Errors(value).First()                // const first = {
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/x',
-                                                     //   value: undefined,
-                                                     //   message: 'Expected number'
-                                                     // }
+const first = C.Errors(value).First(); // const first = {
+//   schema: { type: 'number' },
+//   path: '/x',
+//   value: undefined,
+//   message: 'Expected number'
+// }
 
-const all = [...C.Errors(value)]                     // const all = [{
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/x',
-                                                     //   value: undefined,
-                                                     //   message: 'Expected number'
-                                                     // }, {
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/y',
-                                                     //   value: undefined,
-                                                     //   message: 'Expected number'
-                                                     // }, {
-                                                     //   schema: { type: 'number' },
-                                                     //   path: '/z',
-                                                     //   value: undefined,
-                                                     //   message: 'Expected number'
-                                                     // }]
+const all = [...C.Errors(value)]; // const all = [{
+//   schema: { type: 'number' },
+//   path: '/x',
+//   value: undefined,
+//   message: 'Expected number'
+// }, {
+//   schema: { type: 'number' },
+//   path: '/y',
+//   value: undefined,
+//   message: 'Expected number'
+// }, {
+//   schema: { type: 'number' },
+//   path: '/z',
+//   value: undefined,
+//   message: 'Expected number'
+// }]
 ```
 
 Use the Code function to generate assertion functions as strings. This function can be used to generate code that can be written to disk as importable modules. This technique is sometimes referred to as Ahead of Time (AOT) compilation. The following generates code to check a string.
 
 ```typescript
-const C = TypeCompiler.Code(Type.String())           // const C = `return function check(value) {
-                                                     //   return (
-                                                     //     (typeof value === 'string')
-                                                     //   )
-                                                     // }`
+const C = TypeCompiler.Code(Type.String()); // const C = `return function check(value) {
+//   return (
+//     (typeof value === 'string')
+//   )
+// }`
 ```
 
 <a name='typesystem'></a>
@@ -1582,36 +1648,36 @@ The TypeBox TypeSystem module provides configurations to use either Json Schema 
 
 ### Policies
 
-TypeBox validates using standard Json Schema assertion policies by default. The TypeSystemPolicy module can override some of these to have TypeBox assert values inline with TypeScript static checks. It also provides overrides for certain checking rules related to non-serializable values (such as void) which can be helpful in Json based protocols such as Json Rpc 2.0. 
+TypeBox validates using standard Json Schema assertion policies by default. The TypeSystemPolicy module can override some of these to have TypeBox assert values inline with TypeScript static checks. It also provides overrides for certain checking rules related to non-serializable values (such as void) which can be helpful in Json based protocols such as Json Rpc 2.0.
 
 The following overrides are available.
 
 ```typescript
-import { TypeSystemPolicy } from '@sinclair/typebox/system'
+import { TypeSystemPolicy } from "@sinclair/typebox/system";
 
 // Disallow undefined values for optional properties (default is false)
 //
 // const A: { x?: number } = { x: undefined } - disallowed when enabled
 
-TypeSystemPolicy.ExactOptionalPropertyTypes = true
+TypeSystemPolicy.ExactOptionalPropertyTypes = true;
 
 // Allow arrays to validate as object types (default is false)
 //
 // const A: {} = [] - allowed in TS
 
-TypeSystemPolicy.AllowArrayObject = true
+TypeSystemPolicy.AllowArrayObject = true;
 
 // Allow numeric values to be NaN or + or - Infinity (default is false)
 //
 // const A: number = NaN - allowed in TS
 
-TypeSystemPolicy.AllowNaN = true
+TypeSystemPolicy.AllowNaN = true;
 
 // Allow void types to check with undefined and null (default is false)
 //
 // Used to signal void return on Json-Rpc 2.0 protocol
 
-TypeSystemPolicy.AllowNullVoid = true
+TypeSystemPolicy.AllowNullVoid = true;
 ```
 
 <a name='error-function'></a>
@@ -1622,43 +1688,55 @@ Error messages in TypeBox can be customized by defining an ErrorFunction. This f
 
 The following example shows an inline error function that intercepts errors for String, Number and Boolean only. The DefaultErrorFunction is used to return a default error message.
 
-
 ```typescript
-import { SetErrorFunction, DefaultErrorFunction, ValueErrorType } from '@sinclair/typebox/errors'
+import {
+  SetErrorFunction,
+  DefaultErrorFunction,
+  ValueErrorType,
+} from "@sinclair/typebox/errors";
 
-SetErrorFunction((error) => { // i18n override
-  switch(error.errorType) {
-    /* en-US */ case ValueErrorType.String: return 'Expected string'
-    /* fr-FR */ case ValueErrorType.Number: return 'Nombre attendu'  
-    /* ko-KR */ case ValueErrorType.Boolean: return '예상 부울'      
-    /* en-US */ default: return DefaultErrorFunction(error)          
+SetErrorFunction((error) => {
+  // i18n override
+  switch (error.errorType) {
+    /* en-US */ case ValueErrorType.String:
+      return "Expected string";
+    /* fr-FR */ case ValueErrorType.Number:
+      return "Nombre attendu";
+    /* ko-KR */ case ValueErrorType.Boolean:
+      return "예상 부울";
+    /* en-US */ default:
+      return DefaultErrorFunction(error);
   }
-})
-const T = Type.Object({                              // const T: TObject<{
-  x: Type.String(),                                  //  TString,
-  y: Type.Number(),                                  //  TNumber,
-  z: Type.Boolean()                                  //  TBoolean
-})                                                   // }>
+});
+const T = Type.Object({
+  // const T: TObject<{
+  x: Type.String(), //  TString,
+  y: Type.Number(), //  TNumber,
+  z: Type.Boolean(), //  TBoolean
+}); // }>
 
-const E = [...Value.Errors(T, {                      // const E = [{
-  x: null,                                           //   type: 48,
-  y: null,                                           //   schema: { ... },
-  z: null                                            //   path: '/x',
-})]                                                  //   value: null,
-                                                     //   message: 'Expected string'
-                                                     // }, {
-                                                     //   type: 34,
-                                                     //   schema: { ... },
-                                                     //   path: '/y',
-                                                     //   value: null,
-                                                     //   message: 'Nombre attendu'
-                                                     // }, {
-                                                     //   type: 14,
-                                                     //   schema: { ... },
-                                                     //   path: '/z',
-                                                     //   value: null,
-                                                     //   message: '예상 부울'
-                                                     // }]
+const E = [
+  ...Value.Errors(T, {
+    // const E = [{
+    x: null, //   type: 48,
+    y: null, //   schema: { ... },
+    z: null, //   path: '/x',
+  }),
+]; //   value: null,
+//   message: 'Expected string'
+// }, {
+//   type: 34,
+//   schema: { ... },
+//   path: '/y',
+//   value: null,
+//   message: 'Nombre attendu'
+// }, {
+//   type: 14,
+//   schema: { ... },
+//   path: '/z',
+//   value: null,
+//   message: '예상 부울'
+// }]
 ```
 
 <a name='workbench'></a>
@@ -1683,22 +1761,22 @@ TypeBox provides a code generation library that can be integrated into toolchain
 
 The following is a list of community packages that offer general tooling, extended functionality and framework integration support for TypeBox.
 
-| Package   |  Description |
-| ------------- | ------------- |
-| [drizzle-typebox](https://www.npmjs.com/package/drizzle-typebox) | Generates TypeBox types from Drizzle ORM schemas |
-| [elysia](https://github.com/elysiajs/elysia) | Fast and friendly Bun web framework |
-| [fastify-type-provider-typebox](https://github.com/fastify/fastify-type-provider-typebox) | Fastify TypeBox integration with the Fastify Type Provider |
-| [feathersjs](https://github.com/feathersjs/feathers) | The API and real-time application framework |
-| [fetch-typebox](https://github.com/erfanium/fetch-typebox) | Drop-in replacement for fetch that brings easy integration with TypeBox |
-| [h3-typebox](https://github.com/kevinmarrec/h3-typebox) | Schema validation utilities for h3 using TypeBox & Ajv |
-| [http-wizard](https://github.com/flodlc/http-wizard) | Type safe http client library for Fastify |
-| [openapi-box](https://github.com/geut/openapi-box) | Generate TypeBox types from OpenApi IDL + Http client library |
-| [prismabox](https://github.com/m1212e/prismabox) | Converts a prisma.schema to typebox schema matching the database models |
-| [schema2typebox](https://github.com/xddq/schema2typebox)  | Creating TypeBox code from Json Schemas |
-| [sveltekit-superforms](https://github.com/ciscoheat/sveltekit-superforms)  | A comprehensive SvelteKit form library for server and client validation |
-| [ts2typebox](https://github.com/xddq/ts2typebox) | Creating TypeBox code from Typescript types |
-| [typebox-form-parser](https://github.com/jtlapp/typebox-form-parser) | Parses form and query data based on TypeBox schemas |
-| [typebox-validators](https://github.com/jtlapp/typebox-validators) | Advanced validators supporting discriminated and heterogeneous unions |
+| Package                                                                                   | Description                                                             |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [drizzle-typebox](https://www.npmjs.com/package/drizzle-typebox)                          | Generates TypeBox types from Drizzle ORM schemas                        |
+| [elysia](https://github.com/elysiajs/elysia)                                              | Fast and friendly Bun web framework                                     |
+| [fastify-type-provider-typebox](https://github.com/fastify/fastify-type-provider-typebox) | Fastify TypeBox integration with the Fastify Type Provider              |
+| [feathersjs](https://github.com/feathersjs/feathers)                                      | The API and real-time application framework                             |
+| [fetch-typebox](https://github.com/erfanium/fetch-typebox)                                | Drop-in replacement for fetch that brings easy integration with TypeBox |
+| [h3-typebox](https://github.com/kevinmarrec/h3-typebox)                                   | Schema validation utilities for h3 using TypeBox & Ajv                  |
+| [http-wizard](https://github.com/flodlc/http-wizard)                                      | Type safe http client library for Fastify                               |
+| [openapi-box](https://github.com/geut/openapi-box)                                        | Generate TypeBox types from OpenApi IDL + Http client library           |
+| [prismabox](https://github.com/m1212e/prismabox)                                          | Converts a prisma.schema to typebox schema matching the database models |
+| [schema2typebox](https://github.com/xddq/schema2typebox)                                  | Creating TypeBox code from Json Schemas                                 |
+| [sveltekit-superforms](https://github.com/ciscoheat/sveltekit-superforms)                 | A comprehensive SvelteKit form library for server and client validation |
+| [ts2typebox](https://github.com/xddq/ts2typebox)                                          | Creating TypeBox code from Typescript types                             |
+| [typebox-form-parser](https://github.com/jtlapp/typebox-form-parser)                      | Parses form and query data based on TypeBox schemas                     |
+| [typebox-validators](https://github.com/jtlapp/typebox-validators)                        | Advanced validators supporting discriminated and heterogeneous unions   |
 
 <a name='benchmark'></a>
 
