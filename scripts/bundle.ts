@@ -1,14 +1,11 @@
 #!/bin/env bun
 import { $ } from "bun"
 
-
-
 await $`mkdir -p ./dist/src`
 await $`mkdir -p ./dist/tests`
 await $`mkdir -p ./dist/examples`
 await $`mkdir -p ./dist/benchmarks`
 await $`mkdir -p ./dist/bundle`
-
 
 try {
   const t = await Bun.build({
@@ -33,8 +30,9 @@ await Bun.write("./dist/bundle/[module].d.ts", `
  * @module tjs:__MODULE__
  */
 declare module 'tjs:__MODULE__' {
+  ${old.replaceAll('declare','')}
 }
-${old}
+
 `)
 
 await Bun.write("./dist/src/module.c", `#include "module.h"
