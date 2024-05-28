@@ -1,4 +1,7 @@
-Txiki module version of typebox. Run bundle-txiki to generate the module in `dist`
+> [!NOTE]  
+> This fork is a port of typebox to embed it as a native txiki module. It will not work on different runtimes.  
+> [Instructions](https://github.com/KaruroChori/txiki-modules) on how to use it.  
+> The rest of the README is the same as for the original repo.
 
 ---
 
