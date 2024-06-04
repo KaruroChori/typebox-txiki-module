@@ -104,3 +104,12 @@ export * from './type/void/index'
 // Namespace
 // ------------------------------------------------------------------
 export * from './type/type/index'
+
+
+// ------------------------------------------------------------------
+// Forced exposure of the other modules due to tjs modules restrictions
+// ------------------------------------------------------------------
+export * as Value from './value/index'
+export * as Errors from './errors/index'
+export * as System from './system/index'
+export * as Compiler from './compiler/index'

@@ -13,6 +13,11 @@ try {
     outdir: './dist/src/',
     external: ["tjs:*"],
     target: "bun",
+    minify: {
+      whitespace: true,
+      identifiers: false,
+      syntax: true,
+    },
     /*plugins: [
       dts()
     ],*/
@@ -30,7 +35,7 @@ await Bun.write("./dist/bundle/[module].d.ts", `
  * @module tjs:__MODULE__
  */
 declare module 'tjs:__MODULE__' {
-  ${old.replaceAll('declare','')}
+  ${old.replaceAll('declare', '')}
 }
 
 `)
